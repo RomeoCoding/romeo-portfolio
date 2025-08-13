@@ -1,77 +1,13 @@
 
 
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { SOCIAL_LINKS } from '../constants';
 import { GithubIcon, LinkedinIcon, MailIcon, PhoneIcon } from './Icons';
+import MatrixBackground from './MatrixBackground';
 
 interface FooterProps {
     onNavClick: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
 }
-
-const MatrixFooterBackground: React.FC = () => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-        
-        const parent = canvas.parentElement;
-        if (!parent) return;
-
-        let animationFrameId: number;
-        
-        const resizeCanvas = () => {
-            canvas.width = parent.clientWidth;
-            canvas.height = parent.clientHeight;
-        };
-        resizeCanvas();
-
-        const columns = Math.floor(canvas.width / 20);
-        const drops = Array.from({ length: columns }).map(() => Math.floor(Math.random() * canvas.height));
-        const chars = "01".split('');
-
-        const draw = () => {
-            const theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-            
-            // This color creates the fading trail effect by drawing a semi-transparent rectangle
-            // over the canvas on each frame. This prevents characters from stacking up indefinitely.
-            const fadeColor = theme === 'dark'
-                ? 'rgba(2, 6, 23, 0.05)'  // Semi-transparent dark background (slate-950)
-                : 'rgba(248, 250, 252, 0.05)'; // Semi-transparent light background (slate-50)
-
-            ctx.fillStyle = fadeColor;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            const rainColor = theme === 'dark' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(0, 0, 0, 0.03)';
-
-            ctx.fillStyle = rainColor;
-            ctx.font = '15px monospace';
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = chars[Math.floor(Math.random() * chars.length)];
-                ctx.fillText(text, i * 20, drops[i] * 20);
-                if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
-            animationFrameId = window.requestAnimationFrame(draw);
-        };
-        draw();
-
-        window.addEventListener('resize', resizeCanvas);
-
-        return () => {
-            window.cancelAnimationFrame(animationFrameId);
-            window.removeEventListener('resize', resizeCanvas);
-        };
-    }, []);
-
-    return <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full z-0"></canvas>;
-};
-
 
 const Footer: React.FC<FooterProps> = ({ onNavClick }) => {
     const navLinks = [
@@ -91,7 +27,7 @@ const Footer: React.FC<FooterProps> = ({ onNavClick }) => {
 
     return (
         <footer className="relative border-t border-[var(--card-border-color)]/50 mt-16 text-[var(--text-muted-color)] overflow-hidden">
-            <MatrixFooterBackground />
+            <MatrixBackground />
             <div className="relative z-10 container mx-auto px-6 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
                     <div className="md:col-span-1">

@@ -1,5 +1,4 @@
 import React from 'react';
-import { UserIcon } from './Icons';
 import { useTextScramble } from '../hooks/useTextScramble';
 
 interface AboutProps {
@@ -15,8 +14,8 @@ const About: React.FC<AboutProps> = ({ isVisible = false }) => {
         <div className="w-24 h-1 bg-[var(--primary-color)] mx-auto mb-12"></div>
         <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="md:w-1/3">
-                 <div className="w-48 h-48 md:w-64 md:h-64 mx-auto flex items-center justify-center bg-[var(--card-bg-color)] backdrop-blur-sm rounded-full border-4 border-[var(--card-border-color)] shadow-lg shadow-green-500/10">
-                    <UserIcon className="w-32 h-32 text-[var(--text-muted-color)]" />
+                 <div className="w-48 h-48 md:w-64 md:h-64 mx-auto rounded-full border-4 border-[var(--card-border-color)] shadow-lg shadow-green-500/10 overflow-hidden">
+                    <img src="/profile.jpg" alt="Romeo Mattar" className="w-full h-full object-cover" />
                  </div>
             </div>
             <div className="md:w-2/3 text-left">
