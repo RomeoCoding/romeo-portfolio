@@ -33,14 +33,18 @@ const MatrixBackground: React.FC<MatrixBackgroundProps> = ({ isActive = true }) 
         const draw = () => {
             const theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
             
+            // Increased the alpha for a faster fade
             const fadeColor = theme === 'dark'
-                ? 'rgba(2, 6, 23, 0.05)'
-                : 'rgba(248, 250, 252, 0.05)';
+                ? 'rgba(2, 6, 23, 0.15)'
+                : 'rgba(248, 250, 252, 0.15)';
 
             ctx.fillStyle = fadeColor;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            const rainColor = theme === 'dark' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(0, 0, 0, 0.03)';
+            // Made the rain characters more transparent
+            const rainColor = theme === 'dark' 
+                ? 'rgba(34, 197, 94, 0.4)' // Green with reduced opacity
+                : 'rgba(0, 0, 0, 0.1)'; // Black with reduced opacity
 
             ctx.fillStyle = rainColor;
             ctx.font = '15px monospace';

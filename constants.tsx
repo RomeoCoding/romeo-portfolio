@@ -91,13 +91,13 @@ export const CERTIFICATIONS: Experience[] = [
 
 export const HONORS: Experience[] = [
     {
-        role: 'Dean\'s List',
+        role: 'Outstanding Candidate',
         company: 'Technion - Winter Semester 2022/23',
         period: 'Feb 2023',
         description: []
     },
     {
-        role: 'Dean\'s List',
+        role: 'Outstanding Candidate',
         company: 'Technion - Spring Semester 2022/23',
         period: 'Jul 2023',
         description: []
