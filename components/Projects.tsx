@@ -23,7 +23,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
     }
 
     return (
-    <div className="clipped-card bg-[var(--card-bg-color)] backdrop-blur-sm rounded-lg shadow-lg border border-[var(--card-border-color)] overflow-hidden flex flex-col h-full transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/10 hover:border-[var(--primary-color)]/50">
+    <div className="clipped-card bg-[var(--card-bg-color)] backdrop-blur-sm rounded-lg shadow-lg border border-[var(--card-border-color)] overflow-hidden flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/10 hover:border-[var(--primary-color)]/50">
         <div className="p-6 flex-grow">
         <div className="flex items-start gap-4 mb-2">
             <span className="text-[var(--primary-color)] mt-1">{getProjectIcon(project.title)}</span>

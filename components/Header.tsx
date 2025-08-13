@@ -31,12 +31,12 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, onNavClick }) => {
 
      useEffect(() => {
         if (isMenuOpen) {
-            document.body.style.overflow = 'hidden';
+            document.body.classList.add('overflow-hidden');
         } else {
-            document.body.style.overflow = 'unset';
+            document.body.classList.remove('overflow-hidden');
         }
         return () => {
-            document.body.style.overflow = 'unset';
+            document.body.classList.remove('overflow-hidden');
         };
     }, [isMenuOpen]);
 
@@ -85,7 +85,7 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, onNavClick }) => {
 
             {/* Mobile Menu */}
             {isMenuOpen && (
-                <div className="fixed inset-0 bg-[var(--bg-color)]/95 backdrop-blur-md z-50 flex flex-col items-center justify-center animate-fade-in md:hidden">
+                <div className="fixed inset-0 bg-[var(--bg-color)]/95 backdrop-blur-md z-[999] flex flex-col items-center justify-center animate-fade-in md:hidden">
                     <button onClick={() => setIsMenuOpen(false)} className="absolute top-6 right-5 text-[var(--text-muted-color)] hover:text-[var(--primary-color)] transition-colors" aria-label="Close menu">
                         <XIcon className="w-8 h-8"/>
                     </button>
