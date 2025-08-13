@@ -9,6 +9,17 @@ import {
 
 export const EXPERIENCES: Experience[] = [
   {
+    role: 'Operations & Content Lead',
+    company: 'OnlineCourses Startup',
+    period: 'May 2025 - Present',
+    description: [
+      'Led end-to-end development and production of online course materials, ensuring high-quality and engaging content.',
+      'Managed operational aspects of the online platform, including scheduling, content deployment, and performance monitoring.',
+      'Oversaw tutor performance and student satisfaction; implemented feedback for continuous improvement.',
+      'Contributed to strategic business development, identifying new course opportunities and enhancing value.',
+    ]
+  },
+  {
     role: 'Head of the Mentoring Program',
     company: 'Technion ECE Student Association',
     period: 'Aug 2024 - Present',
