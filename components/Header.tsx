@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { SunIcon, MoonIcon, MenuIcon, XIcon } from './Icons';
@@ -93,8 +94,8 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, onNavClick }) => {
 
             {/* Mobile Menu Portal */}
             {isMenuOpen && createPortal(
-                <div className="fixed inset-0 bg-[var(--bg-color)]/95 z-[9999] flex flex-col items-center justify-center animate-fade-in md:hidden">
-                    <button onClick={() => setIsMenuOpen(false)} className="absolute top-6 right-5 text-[var(--text-muted-color)] hover:text-[var(--primary-color)] transition-colors" aria-label="Close menu">
+                <div className="fixed inset-0 bg-slate-950/95 backdrop-blur-sm z-[9999] flex flex-col items-center justify-center animate-fade-in md:hidden">
+                    <button onClick={() => setIsMenuOpen(false)} className="absolute top-6 right-5 text-gray-400 hover:text-[var(--primary-color)] transition-colors" aria-label="Close menu">
                         <XIcon className="w-8 h-8"/>
                     </button>
                     <nav className="flex flex-col items-center space-y-8">
@@ -106,7 +107,7 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, onNavClick }) => {
                                     onNavClick(e, link.href); 
                                     setIsMenuOpen(false);
                                 }} 
-                                className="text-3xl font-bold text-[var(--text-color)] hover:text-[var(--primary-color)] transition-colors"
+                                className="text-3xl font-bold text-gray-200 hover:text-[var(--primary-color)] transition-colors"
                             >
                                 {link.label}
                             </a>

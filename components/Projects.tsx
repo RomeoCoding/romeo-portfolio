@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { INITIAL_PROJECTS } from '../constants';
 import type { Project } from '../types';
@@ -24,13 +25,13 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
     }
 
     return (
-    <div className="clipped-card bg-[var(--card-bg-color)] backdrop-blur-sm rounded-lg shadow-lg border border-[var(--card-border-color)] overflow-hidden flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/10 hover:border-[var(--primary-color)]/50">
-        <div className="p-6 flex-grow">
+    <div className="clipped-card bg-[var(--card-bg-color)] backdrop-blur-sm rounded-lg shadow-lg border border-[var(--card-border-color)] overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/10 hover:border-[var(--primary-color)]/50">
+        <div className="p-6">
         <div className="flex items-start gap-4 mb-2">
             <span className="text-[var(--primary-color)] mt-1">{getProjectIcon(project.title)}</span>
             <h3 className="text-2xl font-bold text-[var(--text-color)]">{project.title}</h3>
         </div>
-        <p className="text-[var(--text-muted-color)] mb-4 flex-grow">{project.description}</p>
+        <p className="text-[var(--text-muted-color)] mb-4">{project.description}</p>
 
         <div className="mb-4">
             <h4 className="font-semibold text-[var(--primary-color)] mb-2 flex items-center gap-2"><CheckCircleIcon /> Key Features</h4>
@@ -41,7 +42,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
             </ul>
         </div>
 
-        <div className="mb-4">
+        <div>
             <h4 className="font-semibold text-[var(--primary-color)] mb-2 flex items-center gap-2"><CodeIcon /> Technologies</h4>
             <div className="flex flex-wrap gap-2">
                 {project.technologies.map((tech) => (
