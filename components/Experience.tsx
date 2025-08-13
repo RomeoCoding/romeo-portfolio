@@ -5,13 +5,13 @@ import { BriefcaseIcon, SchoolIcon, AwardIcon, CertificateIcon } from './Icons';
 import { useTextScramble } from '../hooks/useTextScramble';
 
 const TimelineItem: React.FC<{ item: ExperienceType; icon: React.ReactNode }> = ({ item, icon }) => (
-  <div className="relative pl-8 sm:pl-40 py-6 group">
+  <div className="relative pl-8 sm:pl-56 py-6 group">
     {/* The timeline line */}
     <div className="absolute left-2 sm:left-0 sm:ml-[6.5rem] w-px h-full bg-[var(--card-border-color)] group-last:hidden -translate-x-1/2"></div>
     {/* The timeline dot */}
     <div className="absolute left-2 sm:left-0 sm:ml-[6.5rem] w-4 h-4 bg-[var(--primary-color)] rounded-full -translate-x-1/2 translate-y-1.5 border-4 border-[var(--bg-color)]"></div>
 
-    <time className="sm:absolute left-0 translate-y-0.5 inline-flex items-center justify-center text-xs font-semibold uppercase w-32 h-6 mb-3 sm:mb-0 text-green-800 dark:text-green-300 bg-green-200 dark:bg-green-900/50 rounded-full">{item.period}</time>
+    <time className="sm:absolute left-0 translate-y-0.5 inline-block text-center text-xs font-semibold uppercase px-4 py-2 mb-3 sm:mb-0 text-green-800 dark:text-green-300 bg-green-200 dark:bg-green-900/50 rounded-full">{item.period}</time>
     <div className="text-xl font-bold text-[var(--text-color)] flex items-center gap-2">
       {icon}
       {item.role}
