@@ -1,9 +1,10 @@
 import React from 'react';
 import { EXPERIENCES, EDUCATION, HONORS, CERTIFICATIONS } from '../constants';
-import type { Experience } from '../types';
+import type { Experience as ExperienceType } from '../types';
 import { BriefcaseIcon, SchoolIcon, AwardIcon, CertificateIcon } from './Icons';
+import { useTextScramble } from '../hooks/useTextScramble';
 
-const TimelineItem: React.FC<{ item: Experience; icon: React.ReactNode }> = ({ item, icon }) => (
+const TimelineItem: React.FC<{ item: ExperienceType; icon: React.ReactNode }> = ({ item, icon }) => (
   <div className="relative pl-8 sm:pl-40 py-6 group">
     {/* The timeline line */}
     <div className="absolute left-2 sm:left-0 sm:ml-[6.5rem] w-px h-full bg-[var(--card-border-color)] group-last:hidden -translate-x-1/2"></div>
@@ -28,11 +29,15 @@ const TimelineItem: React.FC<{ item: Experience; icon: React.ReactNode }> = ({ i
   </div>
 );
 
+interface ExperienceProps {
+  isVisible?: boolean;
+}
 
-const Experience = () => {
+const Experience: React.FC<ExperienceProps> = ({ isVisible = false }) => {
+  const title = useTextScramble('Career & Accomplishments', isVisible);
   return (
     <div className="max-w-4xl mx-auto">
-      <h2 className="text-4xl font-bold text-[var(--text-color)] mb-12 text-center">Career & Accomplishments</h2>
+      <h2 className="text-4xl font-bold text-[var(--text-color)] mb-12 text-center h-12 flex items-center justify-center">{title}</h2>
       <div className="space-y-8 relative">
           <h3 className="text-2xl font-bold text-[var(--primary-color)] text-center">Work Experience</h3>
           {EXPERIENCES.map((exp, index) => (

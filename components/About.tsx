@@ -1,11 +1,17 @@
 import React from 'react';
 import { UserIcon } from './Icons';
+import { useTextScramble } from '../hooks/useTextScramble';
 
-const About = () => {
+interface AboutProps {
+  isVisible?: boolean;
+}
+
+const About: React.FC<AboutProps> = ({ isVisible = false }) => {
+  const title = useTextScramble('About Me', isVisible);
   return (
     <div>
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-4xl font-bold text-[var(--text-color)] mb-6">About Me</h2>
+        <h2 className="text-4xl font-bold text-[var(--text-color)] mb-6 h-12 flex items-center justify-center">{title}</h2>
         <div className="w-24 h-1 bg-[var(--primary-color)] mx-auto mb-12"></div>
         <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="md:w-1/3">

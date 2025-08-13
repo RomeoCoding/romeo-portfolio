@@ -1,12 +1,18 @@
 import React from 'react';
 import { GithubIcon, LinkedinIcon, MailIcon, PhoneIcon } from './Icons';
 import { SOCIAL_LINKS } from '../constants';
+import { useTextScramble } from '../hooks/useTextScramble';
 
-const Contact = () => {
+interface ContactProps {
+  isVisible?: boolean;
+}
+
+const Contact: React.FC<ContactProps> = ({ isVisible = false }) => {
+  const title = useTextScramble('Get In Touch', isVisible);
   return (
     <div className="text-center">
       <div>
-        <h2 className="text-4xl font-bold text-[var(--text-color)] mb-4">Get In Touch</h2>
+        <h2 className="text-4xl font-bold text-[var(--text-color)] mb-4 h-12 flex items-center justify-center">{title}</h2>
         <p className="text-lg text-[var(--text-muted-color)] mb-8 max-w-2xl mx-auto">
           I'm actively seeking new opportunities and collaborations. If you have a role that might be a good fit, or just want to connect, I'd love to hear from you. My full CV is available upon request.
         </p>

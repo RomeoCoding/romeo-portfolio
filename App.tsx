@@ -10,7 +10,9 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
-const SectionWrapper: React.FC<{ children: React.ReactNode; id: string }> = ({ children, id }) => {
+type SectionComponent = React.FC<{ isVisible?: boolean }>;
+
+const SectionWrapper: React.FC<{ component: SectionComponent, id: string }> = ({ component: Component, id }) => {
     const ref = useRef<HTMLDivElement>(null);
     const [isVisible, setIsVisible] = useState(false);
 
@@ -25,13 +27,14 @@ const SectionWrapper: React.FC<{ children: React.ReactNode; id: string }> = ({ c
             { threshold: 0.1 }
         );
 
-        if (ref.current) {
-            observer.observe(ref.current);
+        const currentRef = ref.current;
+        if (currentRef) {
+            observer.observe(currentRef);
         }
 
         return () => {
-            if (ref.current) {
-                observer.unobserve(ref.current);
+            if (currentRef) {
+                observer.unobserve(currentRef);
             }
         };
     }, []);
@@ -42,7 +45,7 @@ const SectionWrapper: React.FC<{ children: React.ReactNode; id: string }> = ({ c
             id={id}
             className={`py-16 md:py-24 scroll-mt-20 section-fade-in ${isVisible ? 'is-visible' : ''}`}
         >
-            {children}
+            <Component isVisible={isVisible} />
         </section>
     );
 };
@@ -77,7 +80,7 @@ function App() {
     }
   };
 
-  const sections = [
+  const sections: { id: string; Component: SectionComponent }[] = [
     { id: 'about', Component: About },
     { id: 'experience', Component: Experience },
     { id: 'skills', Component: Skills },
@@ -91,9 +94,7 @@ function App() {
       <main className="container mx-auto px-4">
         <Hero onNavClick={handleNavClick} />
         {sections.map(({ id, Component }) => (
-          <SectionWrapper key={id} id={id}>
-            <Component />
-          </SectionWrapper>
+          <SectionWrapper key={id} id={id} component={Component} />
         ))}
       </main>
       <Footer onNavClick={handleNavClick} />

@@ -1,10 +1,16 @@
 import React from 'react';
 import { SKILLS } from '../constants';
+import { useTextScramble } from '../hooks/useTextScramble';
 
-const Skills = () => {
+interface SkillsProps {
+  isVisible?: boolean;
+}
+
+const Skills: React.FC<SkillsProps> = ({ isVisible = false }) => {
+  const title = useTextScramble('Technical Skills', isVisible);
   return (
     <div>
-      <h2 className="text-4xl font-bold text-[var(--text-color)] mb-6 text-center">Technical Skills</h2>
+      <h2 className="text-4xl font-bold text-[var(--text-color)] mb-6 text-center h-12 flex items-center justify-center">{title}</h2>
       <div className="w-24 h-1 bg-[var(--primary-color)] mx-auto mb-12"></div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {SKILLS.map((category) => (

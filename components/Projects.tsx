@@ -2,6 +2,7 @@ import React from 'react';
 import { INITIAL_PROJECTS } from '../constants';
 import type { Project } from '../types';
 import { ExternalLinkIcon, CheckCircleIcon, CodeIcon, CpuIcon, BookHeartIcon, ServerIcon, BrainCircuitIcon, MicIcon, LockIcon, FunctionSquareIcon, GlobeIcon, GemIcon, FileTypeIcon } from './Icons';
+import { useTextScramble } from '../hooks/useTextScramble';
 
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
     
@@ -60,11 +61,15 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
     </div>
 )};
 
+interface ProjectsProps {
+    isVisible?: boolean;
+}
 
-const Projects = () => {
+const Projects: React.FC<ProjectsProps> = ({ isVisible = false }) => {
+  const title = useTextScramble('Projects Showcase', isVisible);
   return (
     <div>
-      <h2 className="text-4xl font-bold text-[var(--text-color)] mb-4 text-center">Projects Showcase</h2>
+      <h2 className="text-4xl font-bold text-[var(--text-color)] mb-4 text-center h-12 flex items-center justify-center">{title}</h2>
       <p className="text-lg text-[var(--text-muted-color)] text-center mb-12 max-w-3xl mx-auto">Here are some of my works, showcasing my skills across hardware and software disciplines.</p>
 
       {/* Projects Grid */}

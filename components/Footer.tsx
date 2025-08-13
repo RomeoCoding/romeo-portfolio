@@ -1,4 +1,5 @@
 
+
 import React, { useRef, useEffect } from 'react';
 import { SOCIAL_LINKS } from '../constants';
 import { GithubIcon, LinkedinIcon, MailIcon, PhoneIcon } from './Icons';
@@ -33,12 +34,18 @@ const MatrixFooterBackground: React.FC = () => {
 
         const draw = () => {
             const theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-            const bgColor = 'rgba(0, 0, 0, 0)'; // Fully transparent
-            const rainColor = theme === 'dark' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(0, 0, 0, 0.03)';
+            
+            // This color creates the fading trail effect by drawing a semi-transparent rectangle
+            // over the canvas on each frame. This prevents characters from stacking up indefinitely.
+            const fadeColor = theme === 'dark'
+                ? 'rgba(2, 6, 23, 0.05)'  // Semi-transparent dark background (slate-950)
+                : 'rgba(248, 250, 252, 0.05)'; // Semi-transparent light background (slate-50)
 
-            ctx.fillStyle = bgColor;
+            ctx.fillStyle = fadeColor;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
+            const rainColor = theme === 'dark' ? 'rgba(34, 197, 94, 0.1)' : 'rgba(0, 0, 0, 0.03)';
+
             ctx.fillStyle = rainColor;
             ctx.font = '15px monospace';
 

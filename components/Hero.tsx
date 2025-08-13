@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { SOCIAL_LINKS } from '../constants';
 import { GithubIcon, LinkedinIcon, MailIcon } from './Icons';
@@ -12,7 +13,7 @@ const Typewriter: React.FC<{ text: string }> = ({ text }) => {
     const [loopNum, setLoopNum] = useState(0);
 
     useEffect(() => {
-        let ticker: NodeJS.Timeout;
+        let ticker: ReturnType<typeof setTimeout>;
         const handleType = () => {
             const i = loopNum % text.length;
             const fullText = text;
