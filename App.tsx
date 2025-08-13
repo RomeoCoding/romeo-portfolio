@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 
 import Header from './components/Header';
@@ -8,62 +9,6 @@ import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-
-const MatrixBackground = () => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        let animationFrameId: number;
-        
-        const resizeCanvas = () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        };
-        resizeCanvas();
-
-        const columns = Math.floor(canvas.width / 20);
-        const drops = Array.from({ length: columns }).map(() => Math.floor(Math.random() * canvas.height));
-        const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}".split('');
-
-        const draw = () => {
-            const theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-            const bgColor = theme === 'dark' ? 'rgba(2, 6, 23, 0.05)' : 'rgba(248, 250, 252, 0.05)';
-            const rainColor = theme === 'dark' ? '#22c55e' : 'rgba(0,0,0,0.05)';
-
-            ctx.fillStyle = bgColor;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = rainColor;
-            ctx.font = '15px monospace';
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = chars[Math.floor(Math.random() * chars.length)];
-                ctx.fillText(text, i * 20, drops[i] * 20);
-                if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                drops[i]++;
-            }
-            animationFrameId = window.requestAnimationFrame(draw);
-        };
-        draw();
-
-        window.addEventListener('resize', resizeCanvas);
-
-        return () => {
-            window.cancelAnimationFrame(animationFrameId);
-            window.removeEventListener('resize', resizeCanvas);
-        };
-    }, []);
-
-    return <canvas ref={canvasRef} id="matrix-canvas" className="fixed top-0 left-0 w-full h-full z-[-2]"></canvas>;
-};
-
 
 const SectionWrapper: React.FC<{ children: React.ReactNode; id: string }> = ({ children, id }) => {
     const ref = useRef<HTMLDivElement>(null);
@@ -142,7 +87,6 @@ function App() {
 
   return (
     <div className="bg-transparent text-[var(--text-color)] transition-colors duration-300">
-      <MatrixBackground />
       <Header theme={theme} toggleTheme={toggleTheme} onNavClick={handleNavClick} />
       <main className="container mx-auto px-4">
         <Hero onNavClick={handleNavClick} />

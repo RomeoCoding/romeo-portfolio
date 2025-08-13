@@ -4,7 +4,7 @@ import type { Experience } from '../types';
 import { BriefcaseIcon, SchoolIcon, AwardIcon, CertificateIcon } from './Icons';
 
 const TimelineItem: React.FC<{ item: Experience; icon: React.ReactNode }> = ({ item, icon }) => (
-  <div className="relative pl-8 sm:pl-32 py-6 group">
+  <div className="relative pl-8 sm:pl-40 py-6 group">
     {/* The timeline line */}
     <div className="absolute left-2 sm:left-0 sm:ml-[6.5rem] w-px h-full bg-[var(--card-border-color)] group-last:hidden -translate-x-1/2"></div>
     {/* The timeline dot */}
