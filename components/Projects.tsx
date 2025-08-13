@@ -1,15 +1,16 @@
-
-
-import React from 'react';
-import { INITIAL_PROJECTS } from '../constants';
+import React, { useContext } from 'react';
+import { INITIAL_PROJECTS, GOD_MODE_PROJECT } from '../constants';
 import type { Project } from '../types';
-import { ExternalLinkIcon, CheckCircleIcon, CodeIcon, CpuIcon, BookHeartIcon, ServerIcon, BrainCircuitIcon, MicIcon, LockIcon, FunctionSquareIcon, GlobeIcon, GemIcon, FileTypeIcon } from './Icons';
+import { ExternalLinkIcon, CheckCircleIcon, CodeIcon, CpuIcon, BookHeartIcon, ServerIcon, BrainCircuitIcon, MicIcon, LockIcon, FunctionSquareIcon, GlobeIcon, GemIcon, FileTypeIcon, KeyIcon } from './Icons';
 import { useTextScramble } from '../hooks/useTextScramble';
+import { GodModeContext } from '../contexts/GodModeContext';
 
 const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
-    
+    const { godMode } = useContext(GodModeContext);
+
     const getProjectIcon = (title: string) => {
         const lowerTitle = title.toLowerCase();
+        if (lowerTitle.includes('toaster')) return <KeyIcon />;
         if (lowerTitle.includes('eeg')) return <BrainCircuitIcon />;
         if (lowerTitle.includes('fir filter')) return <CpuIcon />;
         if (lowerTitle.includes('smart mic')) return <MicIcon />;
@@ -69,6 +70,10 @@ interface ProjectsProps {
 
 const Projects: React.FC<ProjectsProps> = ({ isVisible = false }) => {
   const title = useTextScramble('Projects Showcase', isVisible);
+  const { godMode } = useContext(GodModeContext);
+
+  const projects = godMode ? [...INITIAL_PROJECTS, GOD_MODE_PROJECT] : INITIAL_PROJECTS;
+
   return (
     <div>
       <h2 className="text-4xl font-bold text-[var(--text-color)] mb-4 text-center h-12 flex items-center justify-center">{title}</h2>
@@ -76,7 +81,7 @@ const Projects: React.FC<ProjectsProps> = ({ isVisible = false }) => {
 
       {/* Projects Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {INITIAL_PROJECTS.map((project, index) => (
+        {projects.map((project, index) => (
           <ProjectCard key={index} project={project} />
         ))}
       </div>

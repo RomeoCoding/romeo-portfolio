@@ -4,7 +4,7 @@ import {
   GithubIcon, LinkedinIcon, MailIcon, PhoneIcon,
   CodeIcon, ServerIcon, CpuIcon, CircuitBoardIcon, FileCodeIcon,
   GitBranchIcon, SchoolIcon, BriefcaseIcon, AwardIcon,
-  UserIcon, WrenchIcon, LanguagesIcon, CertificateIcon, BrainCircuitIcon, MicIcon, LockIcon, FunctionSquareIcon, BookHeartIcon, GlobeIcon, GemIcon, FileTypeIcon
+  UserIcon, WrenchIcon, LanguagesIcon, CertificateIcon, BrainCircuitIcon, MicIcon, LockIcon, FunctionSquareIcon, BookHeartIcon, GlobeIcon, GemIcon, FileTypeIcon, KeyIcon
 } from './components/Icons';
 
 export const EXPERIENCES: Experience[] = [
@@ -284,6 +284,19 @@ export const INITIAL_PROJECTS: Project[] = [
     link: "#"
   },
 ];
+
+export const GOD_MODE_PROJECT: Project = {
+    title: "AI-Powered Toaster [SECRET]",
+    description: "A revolutionary breakfast appliance with a personality core, capable of existential dread and perfectly browned toast. Activated via God Mode.",
+    features: [
+      "Detects user's emotional state and adjusts toast darkness.",
+      "Delivers philosophical quotes with every slice.",
+      "Quantum-entangled crumb tray (never needs emptying).",
+      "Requires admin privileges (and God Mode) to operate.",
+    ],
+    technologies: ["Sentient AI", "Quantum Mechanics", "A-NSI-ART", "Sourdough SDK"],
+    link: "#"
+};
 
 
 export const SOCIAL_LINKS = {

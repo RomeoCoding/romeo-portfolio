@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTextScramble } from '../hooks/useTextScramble';
 import { UserIcon } from '../components/Icons';
+import { GodModeContext } from '../contexts/GodModeContext';
 
 interface AboutProps {
   isVisible?: boolean;
@@ -8,6 +9,8 @@ interface AboutProps {
 
 const About: React.FC<AboutProps> = ({ isVisible = false }) => {
   const title = useTextScramble('About Me', isVisible);
+  const { godMode } = useContext(GodModeContext);
+
   return (
     <div>
       <div className="max-w-4xl mx-auto text-center">

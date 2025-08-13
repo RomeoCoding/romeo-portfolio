@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { SOCIAL_LINKS } from '../constants';
 import { GithubIcon, LinkedinIcon, MailIcon, PhoneIcon } from './Icons';
@@ -42,7 +40,7 @@ const Footer: React.FC<FooterProps> = ({ onNavClick }) => {
                         </p>
                     </div>
                     
-                    <div className="md:col-span-1">
+                    <div>
                         <h3 className="font-bold text-[var(--text-color)] mb-4">// Traverse</h3>
                         <ul className="space-y-2">
                             {navLinks.map(link => (
@@ -55,7 +53,7 @@ const Footer: React.FC<FooterProps> = ({ onNavClick }) => {
                         </ul>
                     </div>
 
-                    <div className="md:col-span-1">
+                    <div>
                         <h3 className="font-bold text-[var(--text-color)] mb-4">// Connect</h3>
                         <ul className="space-y-3">
                             {socialLinks.map(link => (
@@ -77,6 +75,9 @@ const Footer: React.FC<FooterProps> = ({ onNavClick }) => {
                         STATUS: COMPLETE
                         <span className="text-[var(--primary-color)]">]</span>
                         <span className="animate-ping ml-1">_</span>
+                    </p>
+                     <p className="mt-4 text-xs text-[var(--text-muted-color)]/50 font-mono">
+                        // Hint: &uarr;&uarr;&darr;&darr;&larr;&rarr;&larr;&rarr; B A
                     </p>
                 </div>
             </div>

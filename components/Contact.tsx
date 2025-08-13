@@ -16,7 +16,11 @@ const Contact: React.FC<ContactProps> = ({ isVisible = false }) => {
         <p className="text-lg text-[var(--text-muted-color)] mb-8 max-w-2xl mx-auto">
           I'm actively seeking new opportunities and collaborations. If you have a role that might be a good fit, or just want to connect, I'd love to hear from you. My full CV is available upon request.
         </p>
-        <a href={SOCIAL_LINKS.email} className="inline-block bg-[var(--primary-color)] text-white font-bold text-lg py-3 px-8 rounded-lg hover:bg-[var(--primary-hover-color)] transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-500/20 mb-12">
+        <a 
+          href={SOCIAL_LINKS.email} 
+          className="glitch-button inline-block bg-[var(--primary-color)] text-white font-bold text-lg py-3 px-8 rounded-lg hover:bg-[var(--primary-hover-color)] transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-500/20 mb-12"
+          data-text="Say Hello"
+        >
           Say Hello
         </a>
         <div className="flex justify-center items-center space-x-6">

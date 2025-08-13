@@ -1,5 +1,5 @@
-
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { createPortal } from 'react-dom';
 
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -9,6 +9,12 @@ import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Terminal from './components/Terminal';
+import { TerminalIcon } from './components/Icons';
+import { useKonamiCode } from './hooks/useKonamiCode';
+import { GodModeProvider, GodModeContext } from './contexts/GodModeContext';
+import GodModePanel from './components/GodModePanel';
+import MatrixBackground from './components/MatrixBackground';
 
 type SectionComponent = React.FC<{ isVisible?: boolean }>;
 
@@ -50,14 +56,29 @@ const SectionWrapper: React.FC<{ component: SectionComponent, id: string }> = ({
     );
 };
 
-
-function App() {
+const AppContent = () => {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     if (typeof window !== 'undefined') {
       return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
     }
     return 'dark';
   });
+
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+  const { 
+    godMode, setGodMode, 
+    showKonamiMessage, setShowKonamiMessage, 
+    colorTheme, glitchIntensity,
+  } = useContext(GodModeContext);
+
+  const [overlay, setOverlay] = useState<'none' | 'matrix' | 'reboot'>('none');
+
+  const activateGodMode = () => {
+    setGodMode(true);
+    setShowKonamiMessage(true);
+  };
+  
+  useKonamiCode(activateGodMode);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -67,7 +88,7 @@ function App() {
     localStorage.setItem('theme', newTheme);
   };
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement> | MouseEvent, href: string) => {
     e.preventDefault();
     if (href === '#') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -80,6 +101,12 @@ function App() {
     }
   };
 
+  const handleTerminalCommand = (command: 'matrix' | 'reboot') => {
+    setOverlay(command);
+    setIsTerminalOpen(false);
+    setTimeout(() => setOverlay('none'), command === 'reboot' ? 4000 : 5000);
+  };
+
   const sections: { id: string; Component: SectionComponent }[] = [
     { id: 'about', Component: About },
     { id: 'experience', Component: Experience },
@@ -87,9 +114,32 @@ function App() {
     { id: 'projects', Component: Projects },
     { id: 'contact', Component: Contact },
   ];
+  
+  useEffect(() => {
+    const htmlEl = document.documentElement;
+    if (isTerminalOpen) {
+        htmlEl.classList.add('overflow-hidden');
+    } else {
+        htmlEl.classList.remove('overflow-hidden');
+    }
+    return () => {
+        htmlEl.classList.remove('overflow-hidden');
+    };
+  }, [isTerminalOpen]);
+  
+  useEffect(() => {
+    const htmlEl = document.documentElement;
+    htmlEl.classList.remove('theme-amber', 'theme-cyan');
+    if (colorTheme !== 'green') {
+      htmlEl.classList.add(`theme-${colorTheme}`);
+    }
+    
+    htmlEl.style.setProperty('--glitch-intensity', glitchIntensity.toString());
+  }, [colorTheme, glitchIntensity]);
+
 
   return (
-    <div className="bg-transparent text-[var(--text-color)] transition-colors duration-300">
+    <div className={`bg-transparent text-[var(--text-color)] transition-colors duration-300 ${godMode ? 'god-mode' : ''}`}>
       <Header theme={theme} toggleTheme={toggleTheme} onNavClick={handleNavClick} />
       <main className="container mx-auto px-4">
         <Hero onNavClick={handleNavClick} />
@@ -98,8 +148,67 @@ function App() {
         ))}
       </main>
       <Footer onNavClick={handleNavClick} />
+
+       {godMode && <GodModePanel />}
+
+       <button
+        onClick={() => setIsTerminalOpen(true)}
+        className="fixed bottom-5 right-5 z-50 w-14 h-14 bg-[var(--card-bg-color)]/80 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg border border-[var(--card-border-color)] text-[var(--text-muted-color)] hover:text-[var(--primary-color)] hover:border-[var(--primary-color)] transition-all duration-300 transform hover:scale-110"
+        aria-label="Open Terminal"
+      >
+        <TerminalIcon className="w-7 h-7" />
+      </button>
+
+      {isTerminalOpen && createPortal(
+        <Terminal
+          onClose={() => setIsTerminalOpen(false)}
+          onNavClick={handleNavClick}
+          onCommand={handleTerminalCommand}
+        />,
+        document.body
+      )}
+
+      {showKonamiMessage && createPortal(
+        <div className="konami-alert-overlay" onClick={() => setShowKonamiMessage(false)}>
+          <div className="konami-alert" onClick={(e) => e.stopPropagation()}>
+            <h3 className="text-2xl font-bold text-[var(--primary-color)] mb-2">ACCESS GRANTED</h3>
+            <p className="text-[var(--text-muted-color)] mb-4">God Mode activated. Enjoy the enhanced experience.</p>
+            <button 
+              onClick={() => setShowKonamiMessage(false)}
+              className="bg-[var(--primary-color)] text-white font-bold py-2 px-6 rounded-lg hover:bg-[var(--primary-hover-color)] transition-colors"
+            >
+              CONTINUE
+            </button>
+          </div>
+        </div>,
+        document.body
+      )}
+      
+      {overlay === 'matrix' && createPortal(
+          <div className="fullscreen-overlay">
+              <MatrixBackground isActive={true} />
+          </div>, document.body
+      )}
+
+      {overlay === 'reboot' && createPortal(
+          <div className="fullscreen-overlay text-lg">
+              <p>Rebooting system...</p>
+              <p>[ 1.5234] Rebooting...</p>
+              <p className="animate-ping">[ 3.8712] Shutting down services...</p>
+          </div>, document.body
+      )}
+
     </div>
   );
 }
+
+function App() {
+  return (
+    <GodModeProvider>
+      <AppContent />
+    </GodModeProvider>
+  )
+}
+
 
 export default App;

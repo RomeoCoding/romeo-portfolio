@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SKILLS } from '../constants';
 import { useTextScramble } from '../hooks/useTextScramble';
+import { GodModeContext } from '../contexts/GodModeContext';
 
 interface SkillsProps {
   isVisible?: boolean;
@@ -8,6 +9,8 @@ interface SkillsProps {
 
 const Skills: React.FC<SkillsProps> = ({ isVisible = false }) => {
   const title = useTextScramble('Technical Skills', isVisible);
+  const { godMode } = useContext(GodModeContext);
+
   return (
     <div>
       <h2 className="text-4xl font-bold text-[var(--text-color)] mb-6 text-center h-12 flex items-center justify-center">{title}</h2>

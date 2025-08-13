@@ -1,54 +1,22 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { SOCIAL_LINKS } from '../constants';
 import { GithubIcon, LinkedinIcon, MailIcon } from './Icons';
+import { useTextScramble } from '../hooks/useTextScramble';
+import { GodModeContext } from '../contexts/GodModeContext';
 
 interface HeroProps {
     onNavClick: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
 }
 
-const Typewriter: React.FC<{ text: string }> = ({ text }) => {
-    const [displayText, setDisplayText] = useState('');
-    const [isDeleting, setIsDeleting] = useState(false);
-    const [loopNum, setLoopNum] = useState(0);
-
-    useEffect(() => {
-        let ticker: ReturnType<typeof setTimeout>;
-        const handleType = () => {
-            const i = loopNum % text.length;
-            const fullText = text;
-            const updatedText = isDeleting
-                ? fullText.substring(0, displayText.length - 1)
-                : fullText.substring(0, displayText.length + 1);
-
-            setDisplayText(updatedText);
-
-            if (!isDeleting && updatedText === fullText) {
-                setTimeout(() => setIsDeleting(true), 2000);
-            } else if (isDeleting && updatedText === '') {
-                setIsDeleting(false);
-                setLoopNum(loopNum + 1);
-            }
-        };
-
-        ticker = setTimeout(handleType, isDeleting ? 75 : 150);
-        return () => clearTimeout(ticker);
-    }, [displayText, isDeleting, loopNum, text]);
-
-    return (
-        <span className="border-r-4 border-[var(--primary-color)] pr-1">
-            {displayText}
-        </span>
-    );
-};
-
-
 const Hero: React.FC<HeroProps> = ({ onNavClick }) => {
+  const name = useTextScramble('Romeo Mattar', true, 0);
+  const { godMode } = useContext(GodModeContext);
+
   return (
     <section className="min-h-screen flex items-center justify-center text-center">
-      <div className="max-w-3xl">
-        <h1 className="text-5xl md:text-7xl font-bold text-[var(--text-color)] leading-tight mb-4">
-          <Typewriter text="Romeo Mattar" />
+      <div className="max-w-4xl w-full">
+        <h1 className="text-4xl md:text-6xl font-bold text-[var(--text-color)] mb-4 h-20 flex items-center justify-center font-mono">
+          {name}
         </h1>
         <p className="text-2xl md:text-3xl text-[var(--primary-color)] font-medium mb-8">
           ECE Student @ Technion | Program Manager | R&D | Tutor
@@ -70,7 +38,8 @@ const Hero: React.FC<HeroProps> = ({ onNavClick }) => {
         <a 
           href="#contact"
           onClick={(e) => onNavClick(e, '#contact')}
-          className="inline-block bg-[var(--primary-color)] text-white font-bold text-lg py-3 px-8 rounded-lg hover:bg-[var(--primary-hover-color)] transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-500/20"
+          className="glitch-button inline-block bg-[var(--primary-color)] text-white font-bold text-lg py-3 px-8 rounded-lg hover:bg-[var(--primary-hover-color)] transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-500/20"
+          data-text="Get In Touch"
         >
           Get In Touch
         </a>
