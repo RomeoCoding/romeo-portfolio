@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { INITIAL_PROJECTS } from '../constants';
 import type { Project } from '../types';
@@ -73,7 +74,7 @@ const Projects: React.FC<ProjectsProps> = ({ isVisible = false }) => {
       <p className="text-lg text-[var(--text-muted-color)] text-center mb-12 max-w-3xl mx-auto">Here are some of my works, showcasing my skills across hardware and software disciplines.</p>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="flex flex-col gap-8 lg:grid lg:grid-cols-2">
         {INITIAL_PROJECTS.map((project, index) => (
           <ProjectCard key={index} project={project} />
         ))}
