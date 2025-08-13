@@ -54,7 +54,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
         </div>
         </div>
         {project.link && (
-        <div className="bg-black/10 dark:bg-black/20 p-4 mt-auto">
+        <div className="bg-black/10 dark:bg-black/20 p-4">
             <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-[var(--primary-color)] hover:text-[var(--primary-hover-color)] font-semibold flex items-center justify-center gap-2 transition-colors">
             View Project <ExternalLinkIcon />
             </a>
