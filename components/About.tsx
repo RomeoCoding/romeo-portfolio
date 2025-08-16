@@ -18,8 +18,8 @@ const About: React.FC<AboutProps> = ({ isVisible = false }) => {
         <div className="w-24 h-1 bg-[var(--primary-color)] mx-auto mb-12"></div>
         <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="md:w-1/3">
-                 <div className="w-48 h-48 md:w-64 md:h-64 mx-auto rounded-full border-4 border-[var(--card-border-color)] shadow-lg shadow-green-500/10 flex items-center justify-center bg-[var(--card-bg-color)] backdrop-blur-sm">
-                    <UserIcon className="w-24 h-24 md:w-32 md:h-32 text-[var(--text-muted-color)]" />
+                 <div className="w-48 h-48 md:w-64 md:h-64 mx-auto rounded-full border-4 border-[var(--card-border-color)] shadow-lg shadow-green-500/10 bg-[var(--card-bg-color)] backdrop-blur-sm overflow-hidden">
+                    <img src="/profile.jpg" alt="Romeo Mattar" className="w-full h-full object-cover" />
                  </div>
             </div>
             <div className="md:w-2/3 text-left">

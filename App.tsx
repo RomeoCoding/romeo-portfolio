@@ -30,7 +30,7 @@ const SectionWrapper: React.FC<{ component: SectionComponent, id: string }> = ({
                     observer.unobserve(entry.target);
                 }
             },
-            { threshold: 0.1 }
+            { threshold: 0.05 }
         );
 
         const currentRef = ref.current;
