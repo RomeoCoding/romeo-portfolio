@@ -1,5 +1,4 @@
-
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useTextScramble } from '../hooks/useTextScramble';
 import { GodModeContext } from '../contexts/GodModeContext';
 
@@ -10,7 +9,6 @@ interface AboutProps {
 const About: React.FC<AboutProps> = ({ isVisible = false }) => {
   const title = useTextScramble('About Me', isVisible);
   const { godMode } = useContext(GodModeContext);
-  const [imageError, setImageError] = useState(false);
 
   return (
     <div>
@@ -20,19 +18,11 @@ const About: React.FC<AboutProps> = ({ isVisible = false }) => {
         <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="md:w-1/3">
                  <div className="w-48 h-48 md:w-64 md:h-64 mx-auto rounded-full border-4 border-[var(--card-border-color)] shadow-lg shadow-green-500/10 bg-[var(--card-bg-color)] backdrop-blur-sm overflow-hidden flex items-center justify-center">
-                    {imageError ? (
-                        <div className="text-center text-xs text-[var(--text-muted-color)] p-4">
-                            <p className="font-bold text-base text-[var(--text-color)] mb-2">Image Not Found</p>
-                            <p>Please place <code className="bg-black/20 p-1 rounded">profile.jpg</code> in the <code className="bg-black/20 p-1 rounded">public</code> folder at the project root.</p>
-                        </div>
-                    ) : (
-                        <img 
-                            src="/profile.jpg"
-                            alt="Romeo Mattar" 
-                            className="w-full h-full object-cover"
-                            onError={() => setImageError(true)}
-                        />
-                    )}
+                    <img 
+                        src="/profile.jpg"
+                        alt="Romeo Mattar" 
+                        className="w-full h-full object-cover"
+                    />
                  </div>
             </div>
             <div className="md:w-2/3 text-left">
