@@ -1,12 +1,10 @@
-import React, { useContext } from 'react';
-import { EXPERIENCES, EDUCATION, HONORS, CERTIFICATIONS } from '../constants';
+import React from 'react';
 import type { Experience as ExperienceType } from '../types';
 import { BriefcaseIcon, SchoolIcon, AwardIcon, CertificateIcon } from './Icons';
 import { useTextScramble } from '../hooks/useTextScramble';
-import { GodModeContext } from '../contexts/GodModeContext';
+import { EXPERIENCE_DATA } from '../constants';
 
 const TimelineItem: React.FC<{ item: ExperienceType; icon: React.ReactNode }> = ({ item, icon }) => {
-  const { godMode } = useContext(GodModeContext);
   return (
     <div className="relative pl-8 sm:pl-56 py-6 group">
       {/* The timeline line */}
@@ -38,25 +36,24 @@ interface ExperienceProps {
 }
 
 const Experience: React.FC<ExperienceProps> = ({ isVisible = false }) => {
-  const title = useTextScramble('Career & Accomplishments', isVisible);
-  const { godMode } = useContext(GodModeContext);
+  const title = useTextScramble(EXPERIENCE_DATA.title, isVisible);
 
   return (
     <div className="max-w-4xl mx-auto">
       <h2 className="text-4xl font-bold text-[var(--text-color)] mb-12 text-center h-12 flex items-center justify-center">{title}</h2>
       <div className="space-y-8 relative">
-          <h3 className="text-2xl font-bold text-[var(--primary-color)] text-center">Work Experience</h3>
-          {EXPERIENCES.map((exp, index) => (
+          <h3 className="text-2xl font-bold text-[var(--primary-color)] text-center">{EXPERIENCE_DATA.workTitle}</h3>
+          {EXPERIENCE_DATA.experiences.map((exp, index) => (
               <TimelineItem key={`exp-${index}`} item={exp} icon={<BriefcaseIcon />} />
           ))}
-           <h3 className="text-2xl font-bold text-[var(--primary-color)] text-center pt-8">Education</h3>
-          <TimelineItem item={EDUCATION} icon={<SchoolIcon />} />
-          <h3 className="text-2xl font-bold text-[var(--primary-color)] text-center pt-8">Certifications</h3>
-          {CERTIFICATIONS.map((cert, index) => (
+           <h3 className="text-2xl font-bold text-[var(--primary-color)] text-center pt-8">{EXPERIENCE_DATA.educationTitle}</h3>
+          <TimelineItem item={EXPERIENCE_DATA.education} icon={<SchoolIcon />} />
+          <h3 className="text-2xl font-bold text-[var(--primary-color)] text-center pt-8">{EXPERIENCE_DATA.certificationsTitle}</h3>
+          {EXPERIENCE_DATA.certifications.map((cert, index) => (
                <TimelineItem key={`cert-${index}`} item={cert} icon={<CertificateIcon />} />
           ))}
-          <h3 className="text-2xl font-bold text-[var(--primary-color)] text-center pt-8">Honors & Awards</h3>
-          {HONORS.map((honor, index) => (
+          <h3 className="text-2xl font-bold text-[var(--primary-color)] text-center pt-8">{EXPERIENCE_DATA.honorsTitle}</h3>
+          {EXPERIENCE_DATA.honors.map((honor, index) => (
                <TimelineItem key={`honor-${index}`} item={honor} icon={<AwardIcon />} />
           ))}
       </div>

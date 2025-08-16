@@ -1,9 +1,8 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { SunIcon, MoonIcon, MenuIcon, XIcon } from './Icons';
+import { SunIcon, MoonIcon, MenuIcon, XIcon, GlobeIcon } from './Icons';
 import MatrixBackground from './MatrixBackground';
+import { NAV_LINKS } from '../constants';
 
 interface HeaderProps {
     theme: string;
@@ -48,12 +47,18 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, onNavClick }) => {
     }, [isMenuOpen]);
 
     const navLinks = [
-        { href: '#about', label: 'About' },
-        { href: '#experience', label: 'Experience' },
-        { href: '#skills', label: 'Skills' },
-        { href: '#projects', label: 'Projects' },
-        { href: '#contact', label: 'Contact' },
+        { href: '#about', label: NAV_LINKS.about },
+        { href: '#experience', label: NAV_LINKS.experience },
+        { href: '#skills', label: NAV_LINKS.skills },
+        { href: '#projects', label: NAV_LINKS.projects },
+        { href: '#contact', label: NAV_LINKS.contact },
     ];
+    
+    const handleTranslate = () => {
+        const currentUrl = window.location.href;
+        const googleTranslateUrl = `https://translate.google.com/translate?sl=en&tl=he&u=${encodeURIComponent(currentUrl)}`;
+        window.open(googleTranslateUrl, '_blank', 'noopener,noreferrer');
+    };
 
     return (
         <>
@@ -75,6 +80,13 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme, onNavClick }) => {
                         ))}
                     </div>
                     <div className="flex items-center gap-4">
+                         <button
+                            onClick={handleTranslate}
+                            className="w-9 h-9 bg-gray-500/10 dark:bg-gray-800/50 rounded-full flex items-center justify-center text-[var(--text-muted-color)] hover:bg-gray-500/20 dark:hover:bg-gray-700/50 transition-colors"
+                            aria-label="Translate to Hebrew"
+                        >
+                            <GlobeIcon className="w-5 h-5" />
+                        </button>
                         <button
                             onClick={toggleTheme}
                             className="w-9 h-9 bg-gray-500/10 dark:bg-gray-800/50 rounded-full flex items-center justify-center text-[var(--text-muted-color)] hover:bg-gray-500/20 dark:hover:bg-gray-700/50 transition-colors"

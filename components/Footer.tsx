@@ -1,5 +1,5 @@
 import React from 'react';
-import { SOCIAL_LINKS } from '../constants';
+import { SOCIAL_LINKS, FOOTER_DATA } from '../constants';
 import { GithubIcon, LinkedinIcon, MailIcon, PhoneIcon } from './Icons';
 import MatrixBackground from './MatrixBackground';
 
@@ -9,18 +9,18 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ onNavClick }) => {
     const navLinks = [
-        { href: '#about', label: '~/about' },
-        { href: '#experience', label: '~/experience' },
-        { href: '#skills', label: '~/skills' },
-        { href: '#projects', label: '~/projects' },
-        { href: '#contact', label: '~/contact' },
+        { href: '#about', label: FOOTER_DATA.nav.about },
+        { href: '#experience', label: FOOTER_DATA.nav.experience },
+        { href: '#skills', label: FOOTER_DATA.nav.skills },
+        { href: '#projects', label: FOOTER_DATA.nav.projects },
+        { href: '#contact', label: FOOTER_DATA.nav.contact },
     ];
 
     const socialLinks = [
-        { href: SOCIAL_LINKS.linkedin, icon: <LinkedinIcon className="w-5 h-5" />, label: 'LinkedIn' },
-        { href: SOCIAL_LINKS.github, icon: <GithubIcon className="w-5 h-5" />, label: 'GitHub' },
-        { href: SOCIAL_LINKS.email, icon: <MailIcon className="w-5 h-5" />, label: 'Email' },
-        { href: SOCIAL_LINKS.phone, icon: <PhoneIcon className="w-5 h-5" />, label: 'Phone' },
+        { href: SOCIAL_LINKS.linkedin, icon: <LinkedinIcon className="w-5 h-5" />, label: FOOTER_DATA.social.linkedin },
+        { href: SOCIAL_LINKS.github, icon: <GithubIcon className="w-5 h-5" />, label: FOOTER_DATA.social.github },
+        { href: SOCIAL_LINKS.email, icon: <MailIcon className="w-5 h-5" />, label: FOOTER_DATA.social.email },
+        { href: SOCIAL_LINKS.phone, icon: <PhoneIcon className="w-5 h-5" />, label: FOOTER_DATA.social.phone },
     ];
 
     return (
@@ -33,15 +33,15 @@ const Footer: React.FC<FooterProps> = ({ onNavClick }) => {
                             &lt;RM <span className="text-[var(--primary-color)]">/</span>&gt;
                         </a>
                         <p>
-                            A portfolio by Romeo Mattar.
+                            {FOOTER_DATA.bio}
                         </p>
                          <p className="mt-2">
-                            Built with React, Tailwind, and Gemini.
+                            {FOOTER_DATA.tech}
                         </p>
                     </div>
                     
                     <div>
-                        <h3 className="font-bold text-[var(--text-color)] mb-4">// Traverse</h3>
+                        <h3 className="font-bold text-[var(--text-color)] mb-4">// {FOOTER_DATA.traverse}</h3>
                         <ul className="space-y-2">
                             {navLinks.map(link => (
                                 <li key={link.href}>
@@ -54,7 +54,7 @@ const Footer: React.FC<FooterProps> = ({ onNavClick }) => {
                     </div>
 
                     <div>
-                        <h3 className="font-bold text-[var(--text-color)] mb-4">// Connect</h3>
+                        <h3 className="font-bold text-[var(--text-color)] mb-4">// {FOOTER_DATA.connect}</h3>
                         <ul className="space-y-3">
                             {socialLinks.map(link => (
                                 <li key={link.label}>
@@ -69,15 +69,15 @@ const Footer: React.FC<FooterProps> = ({ onNavClick }) => {
                 </div>
 
                 <div className="mt-12 pt-8 border-t border-[var(--card-border-color)]/50 text-center text-sm">
-                    <p>&copy; {new Date().getFullYear()} Romeo Mattar. All rights reserved.</p>
+                    <p>{FOOTER_DATA.copyright}</p>
                     <p className="mt-1 font-mono">
                         <span className="text-[var(--primary-color)]">[</span>
-                        STATUS: COMPLETE
+                        {FOOTER_DATA.status}
                         <span className="text-[var(--primary-color)]">]</span>
-                        <span className="animate-ping ml-1">_</span>
+                        <span className="animate-ping ms-1">_</span>
                     </p>
                      <p className="mt-4 text-xs text-[var(--text-muted-color)]/50 font-mono">
-                        // Hint: &uarr;&uarr;&darr;&darr;&larr;&rarr;&larr;&rarr; B A
+                        {FOOTER_DATA.konamiHint}
                     </p>
                 </div>
             </div>

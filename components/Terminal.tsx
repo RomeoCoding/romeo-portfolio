@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { XIcon } from './Icons';
-import { SOCIAL_LINKS } from '../constants';
+import { SOCIAL_LINKS, TERMINAL_DATA } from '../constants';
 import { GodModeContext } from '../contexts/GodModeContext';
 
 interface TerminalProps {
@@ -32,9 +32,10 @@ const levenshtein = (s1: string, s2: string): number => {
 
 const Terminal: React.FC<TerminalProps> = ({ onClose, onNavClick, onCommand }) => {
   const { godMode } = useContext(GodModeContext);
+  const t = TERMINAL_DATA;
   const [history, setHistory] = useState<React.ReactNode[]>(() => [
-    <div key="welcome">Welcome to my interactive terminal.</div>,
-    <div key="help-prompt">Type <span className="text-[var(--primary-color)]">'help'</span> to see a list of available commands.</div>,
+    <div key="welcome">{t.welcome}</div>,
+    <div key="help-prompt" dangerouslySetInnerHTML={{ __html: t.helpPrompt.replace(/'help'/g, `<span class="text-[var(--primary-color)]">'help'</span>`)}}></div>,
   ]);
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -44,56 +45,51 @@ const Terminal: React.FC<TerminalProps> = ({ onClose, onNavClick, onCommand }) =
     switch (command.toLowerCase()) {
       case 'help': {
         const baseCommands = [
-          'Available commands:',
-          '  help          - Show this help message',
-          '  whoami        - Display a short bio',
-          '  social        - List social media links',
-          '  contact       - Show contact information',
-          '  ls            - List portfolio sections',
-          '  cd [section]  - Navigate to a section (e.g., "cd projects")',
-          '  clear         - Clear the terminal screen',
-          '  exit          - Close the terminal',
+          t.help.title,
+          t.help.help,
+          t.help.whoami,
+          t.help.social,
+          t.help.contact,
+          t.help.ls,
+          t.help.cd,
+          t.help.clear,
+          t.help.exit,
         ];
         if (godMode) {
           return [
             ...baseCommands,
             '',
-            'GOD MODE COMMANDS:',
-            '  sudo [cmd]    - Execute command as superuser',
-            '  matrix        - Activate the digital rain overlay',
-            '  reboot        - Simulate a system reboot',
+            t.help.godModeTitle,
+            t.help.sudo,
+            t.help.matrix,
+            t.help.reboot,
           ]
         }
         return baseCommands;
       }
       case 'whoami':
-        return [
-          'Romeo Mattar: A dedicated third-year Electrical and Computer Engineering student at Technion,',
-          'specializing in VLSI, power systems, and signal processing.',
-          'Passionate about bridging hardware and software to build innovative solutions.'
-        ];
+        return t.whoamiResponse;
       case 'social':
         return [
-          `LinkedIn: <a href="${SOCIAL_LINKS.linkedin}" target="_blank" rel="noopener noreferrer" class="text-[var(--primary-color)] hover:underline">${SOCIAL_LINKS.linkedin}</a>`,
-          `GitHub:   <a href="${SOCIAL_LINKS.github}" target="_blank" rel="noopener noreferrer" class="text-[var(--primary-color)] hover:underline">${SOCIAL_LINKS.github}</a>`
+          `${t.socialResponse.linkedin} <a href="${SOCIAL_LINKS.linkedin}" target="_blank" rel="noopener noreferrer" class="text-[var(--primary-color)] hover:underline">${SOCIAL_LINKS.linkedin}</a>`,
+          `${t.socialResponse.github}   <a href="${SOCIAL_LINKS.github}" target="_blank" rel="noopener noreferrer" class="text-[var(--primary-color)] hover:underline">${SOCIAL_LINKS.github}</a>`
         ];
       case 'contact':
         return [
-          `Email: <a href="${SOCIAL_LINKS.email}" class="text-[var(--primary-color)] hover:underline">romeomattar239@gmail.com</a>`,
-          `Phone: <a href="${SOCIAL_LINKS.phone}" class="text-[var(--primary-color)] hover:underline">054-569-7874</a>`
+          `${t.contactResponse.email} <a href="${SOCIAL_LINKS.email}" class="text-[var(--primary-color)] hover:underline">romeomattar239@gmail.com</a>`,
+          `${t.contactResponse.phone} <a href="${SOCIAL_LINKS.phone}" class="text-[var(--primary-color)] hover:underline">054-569-7874</a>`
         ];
       case 'ls':
-        return ['about', 'experience', 'skills', 'projects', 'contact'];
+        return t.lsResponse;
       case 'cd': {
         const section = args[0];
-        const validSections = ['about', 'experience', 'skills', 'projects', 'contact'];
-        if (validSections.includes(section)) {
+        if (t.lsResponse.includes(section)) {
           const dummyEvent = new MouseEvent('click') as unknown as React.MouseEvent<HTMLAnchorElement>;
           onNavClick(dummyEvent, `#${section}`);
           setTimeout(onClose, 300); // Close terminal after a short delay
-          return [`Navigating to ${section}...`];
+          return [t.cdResponse.navigating(section)];
         } else {
-          return [`Error: Section '${section}' not found. Try 'ls' to see available sections.`];
+          return [t.cdResponse.error(section)];
         }
       }
       case 'clear':
@@ -107,21 +103,21 @@ const Terminal: React.FC<TerminalProps> = ({ onClose, onNavClick, onCommand }) =
       case 'sudo':
         if (godMode) {
             if (args.length > 0) {
-                 return [`Permission granted. Executing "${args.join(' ')}" with root privileges... Success.`];
+                 return [t.sudoResponse.success(args.join(' '))];
             }
-            return ['We trust you have received the usual lecture from the local System Administrator.'];
+            return [t.sudoResponse.lecture];
         }
         return [`sudo: command not found`];
       case 'matrix':
         if(godMode) {
             onCommand('matrix');
-            return ['Activating digital rain...'];
+            return [t.matrixResponse];
         }
         return [`matrix: command not found`];
       case 'reboot':
          if(godMode) {
             onCommand('reboot');
-            return ['Initiating system reboot...'];
+            return [t.rebootResponse];
         }
         return [`reboot: command not found`];
 
@@ -133,11 +129,11 @@ const Terminal: React.FC<TerminalProps> = ({ onClose, onNavClick, onCommand }) =
 
           for (const validCmd of validCommands) {
               if (command.length > 2 && levenshtein(command, validCmd) <= 2) {
-                  return [`"${command}" doesn't exist! Come on spell it correct!`];
+                  return [t.misspelled(command)];
               }
           }
 
-          return [`Command not found: ${command}. Type 'help' for a list of commands.`];
+          return [t.commandNotFound(command)];
         }
     }
   };

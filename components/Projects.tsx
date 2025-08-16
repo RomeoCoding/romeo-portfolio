@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
-import { INITIAL_PROJECTS, GOD_MODE_PROJECT } from '../constants';
+import React from 'react';
 import type { Project } from '../types';
 import { ExternalLinkIcon, CheckCircleIcon, CodeIcon, CpuIcon, BookHeartIcon, ServerIcon, BrainCircuitIcon, MicIcon, LockIcon, FunctionSquareIcon, GlobeIcon, GemIcon, FileTypeIcon, KeyIcon } from './Icons';
 import { useTextScramble } from '../hooks/useTextScramble';
+import { PROJECTS_DATA } from '../constants';
 import { GodModeContext } from '../contexts/GodModeContext';
 
-const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
-    const { godMode } = useContext(GodModeContext);
 
+const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
     const getProjectIcon = (title: string) => {
         const lowerTitle = title.toLowerCase();
+        if (lowerTitle.includes('saas') || lowerTitle.includes('weaas')) return <ServerIcon />;
         if (lowerTitle.includes('toaster')) return <KeyIcon />;
         if (lowerTitle.includes('eeg')) return <BrainCircuitIcon />;
         if (lowerTitle.includes('fir filter')) return <CpuIcon />;
@@ -35,7 +35,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
         <p className="text-[var(--text-muted-color)] mb-4">{project.description}</p>
 
         <div className="mb-4">
-            <h4 className="font-semibold text-[var(--primary-color)] mb-2 flex items-center gap-2"><CheckCircleIcon /> Key Features</h4>
+            <h4 className="font-semibold text-[var(--primary-color)] mb-2 flex items-center gap-2"><CheckCircleIcon /> {PROJECTS_DATA.keyFeatures}</h4>
             <ul className="list-disc list-inside text-[var(--text-muted-color)] space-y-1">
             {project.features.map((feature, index) => (
                 <li key={index}>{feature}</li>
@@ -44,7 +44,7 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
         </div>
 
         <div>
-            <h4 className="font-semibold text-[var(--primary-color)] mb-2 flex items-center gap-2"><CodeIcon /> Technologies</h4>
+            <h4 className="font-semibold text-[var(--primary-color)] mb-2 flex items-center gap-2"><CodeIcon /> {PROJECTS_DATA.technologies}</h4>
             <div className="flex flex-wrap gap-2">
                 {project.technologies.map((tech) => (
                 <span key={tech} className="bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 text-xs font-medium px-2.5 py-1 rounded-full">
@@ -54,10 +54,10 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
             </div>
         </div>
         </div>
-        {project.link && (
+        {project.link && project.link !== "#" && (
         <div className="bg-black/10 dark:bg-black/20 p-4">
             <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-[var(--primary-color)] hover:text-[var(--primary-hover-color)] font-semibold flex items-center justify-center gap-2 transition-colors">
-            View Project <ExternalLinkIcon />
+            {PROJECTS_DATA.viewProject} <ExternalLinkIcon />
             </a>
         </div>
         )}
@@ -69,15 +69,15 @@ interface ProjectsProps {
 }
 
 const Projects: React.FC<ProjectsProps> = ({ isVisible = false }) => {
-  const title = useTextScramble('Projects Showcase', isVisible);
-  const { godMode } = useContext(GodModeContext);
+  const title = useTextScramble(PROJECTS_DATA.title, isVisible);
+  const { godMode } = React.useContext(GodModeContext);
 
-  const projects = godMode ? [...INITIAL_PROJECTS, GOD_MODE_PROJECT] : INITIAL_PROJECTS;
+  const projects = godMode ? [...PROJECTS_DATA.projectList, PROJECTS_DATA.godModeProject] : PROJECTS_DATA.projectList;
 
   return (
     <div>
       <h2 className="text-4xl font-bold text-[var(--text-color)] mb-4 text-center h-12 flex items-center justify-center">{title}</h2>
-      <p className="text-lg text-[var(--text-muted-color)] text-center mb-12 max-w-3xl mx-auto">Here are some of my works, showcasing my skills across hardware and software disciplines.</p>
+      <p className="text-lg text-[var(--text-muted-color)] text-center mb-12 max-w-3xl mx-auto">{PROJECTS_DATA.description}</p>
 
       {/* Projects Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

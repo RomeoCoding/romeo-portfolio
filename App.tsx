@@ -13,6 +13,7 @@ import Terminal from './components/Terminal';
 import { TerminalIcon } from './components/Icons';
 import { useKonamiCode } from './hooks/useKonamiCode';
 import { GodModeProvider, GodModeContext } from './contexts/GodModeContext';
+import { GOD_MODE_DATA } from './constants';
 import GodModePanel from './components/GodModePanel';
 import MatrixBackground from './components/MatrixBackground';
 
@@ -171,13 +172,13 @@ const AppContent = () => {
       {showKonamiMessage && createPortal(
         <div className="konami-alert-overlay" onClick={() => setShowKonamiMessage(false)}>
           <div className="konami-alert" onClick={(e) => e.stopPropagation()}>
-            <h3 className="text-2xl font-bold text-[var(--primary-color)] mb-2">ACCESS GRANTED</h3>
-            <p className="text-[var(--text-muted-color)] mb-4">God Mode activated. Enjoy the enhanced experience.</p>
+            <h3 className="text-2xl font-bold text-[var(--primary-color)] mb-2">{GOD_MODE_DATA.konamiAlert.title}</h3>
+            <p className="text-[var(--text-muted-color)] mb-4">{GOD_MODE_DATA.konamiAlert.description}</p>
             <button 
               onClick={() => setShowKonamiMessage(false)}
               className="bg-[var(--primary-color)] text-white font-bold py-2 px-6 rounded-lg hover:bg-[var(--primary-hover-color)] transition-colors"
             >
-              CONTINUE
+              {GOD_MODE_DATA.konamiAlert.button}
             </button>
           </div>
         </div>,
@@ -205,7 +206,7 @@ const AppContent = () => {
 function App() {
   return (
     <GodModeProvider>
-      <AppContent />
+        <AppContent />
     </GodModeProvider>
   )
 }

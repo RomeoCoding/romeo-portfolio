@@ -1,6 +1,6 @@
 import React from 'react';
 import { GithubIcon, LinkedinIcon, MailIcon, PhoneIcon } from './Icons';
-import { SOCIAL_LINKS } from '../constants';
+import { SOCIAL_LINKS, CONTACT_DATA } from '../constants';
 import { useTextScramble } from '../hooks/useTextScramble';
 
 interface ContactProps {
@@ -8,20 +8,20 @@ interface ContactProps {
 }
 
 const Contact: React.FC<ContactProps> = ({ isVisible = false }) => {
-  const title = useTextScramble('Get In Touch', isVisible);
+  const title = useTextScramble(CONTACT_DATA.title, isVisible);
   return (
     <div className="text-center">
       <div>
         <h2 className="text-4xl font-bold text-[var(--text-color)] mb-4 h-12 flex items-center justify-center">{title}</h2>
         <p className="text-lg text-[var(--text-muted-color)] mb-8 max-w-2xl mx-auto">
-          I'm actively seeking new opportunities and collaborations. If you have a role that might be a good fit, or just want to connect, I'd love to hear from you. My full CV is available upon request.
+          {CONTACT_DATA.description}
         </p>
         <a 
           href={SOCIAL_LINKS.email} 
           className="glitch-button inline-block bg-[var(--primary-color)] text-white font-bold text-lg py-3 px-8 rounded-lg hover:bg-[var(--primary-hover-color)] transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-500/20 mb-12"
-          data-text="Say Hello"
+          data-text={CONTACT_DATA.button}
         >
-          Say Hello
+          {CONTACT_DATA.button}
         </a>
         <div className="flex justify-center items-center space-x-6">
           <a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted-color)] hover:text-[var(--primary-color)] transition-colors">
