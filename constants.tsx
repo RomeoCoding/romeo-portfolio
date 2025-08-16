@@ -301,7 +301,7 @@ export const GOD_MODE_PROJECT: Project = {
 
 export const SOCIAL_LINKS = {
     linkedin: "https://www.linkedin.com/in/romeo-mattar/",
-    github: "https://github.com/romeomattar", // User should update this
-    email: "mailto:romeomattar239@gmail.com",
+    github: "https://github.com/romeocoding", 
+    email: "mailto:romeomat.work@gmail.com",
     phone: "tel:0545697874"
 };
